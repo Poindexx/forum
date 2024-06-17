@@ -1,0 +1,95 @@
+body {
+    font-family: "Inter", sans-serif;
+    background-color: rgb(247, 245, 245);
+}
+
+.card-img-custom {
+    height: 200px; /* Задаем желаемую высоту изображения */
+    width: 100%; /* Задаем ширину 100% для корректного отображения */
+    object-fit: cover; /* Заполнение всего пространства изображением */
+}
+
+textarea {
+    white-space: pre-wrap; /* Сохраняет пробелы и переносы строк */
+    width: 100%; /* Задает ширину поля ввода */
+    height: 200px; /* Задает высоту поля ввода */
+    box-sizing: border-box; /* Обеспечивает включение границ и полей в общую ширину и высоту */
+}
+.formatted-text {
+    white-space: pre-line; /* Сохраняет пробелы и переносы строк */
+}
+
+
+.social-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.social-button {
+    display: inline-block;
+    padding: 5px 20px;
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    display: flex;
+    flex-wrap: wrap-reverse;
+    align-items: center;
+}
+.social-button i {
+    margin-right: 8px;
+}
+.vk { background-color: #4a76a8; }
+.instagram { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
+.twitter { background-color: #1da1f2; }
+.github { background-color: #333; }
+.facebook { background-color: #3b5998; }
+
+.document-share-modal__input {
+    display: flex;
+    height: 32px;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    padding: 6px 12px 6px 8px;
+    border: 2px dotted black;
+    border-radius: 8px;
+    border-radius: var(--ui-radius-sm, 8px);
+    cursor: pointer;
+    font-size: var(--ui-font-size-body-md);
+    gap: 8px;
+    line-height: 20px;
+}
+
+#linkAdr {
+    overflow:hidden;
+    text-overflow: ellipsis;
+}
+.write-post__picture {
+    width: 256px;
+    height: 180px;
+    margin: 24px 32px 0;
+}
+.kk {
+    display: flex;
+    flex-direction: column;
+}
+
+.write-post__content {
+    display: inline-grid;
+}
+
+ul.dropdown-menu.show {
+    display: contents;
+}
+
+.navbar-toggler-icon {
+    color: rgb(0, 52, 37);
+}
+.button-del {
+    display: flex;
+    justify-content: space-between;
+}
+.but-danger {
+    height: 20%;
+}

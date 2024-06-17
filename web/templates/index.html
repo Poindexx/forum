@@ -1,0 +1,127 @@
+{{define "content"}}
+<main class="container-fluid">
+    <div class="row g-5">
+        <div class="col-xl-1 col-md-0 ">
+        </div>
+        <div class="col-xl-2 col-md-4">
+            <div class="position-sticky" style="top: 2rem;">
+                <div class="p-4 mb-3 bg-body-tertiary rounded">
+                    <div class="write-post__content">
+                        <h3 class="write-post__title">Все Категории</h3>
+                        <div class="btn-group-vertical" role="group" aria-label="Vertical button group" id="rendCategory">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4 mb-3 bg-body-tertiary rounded">
+                    <div class="write-post__content">
+                        <h3 class="write-post__title">Фильтрация</h3>
+                        <form id="dateFilterForm">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="startDate">Дата начала</label>
+                                    <div class="input-group date" id="startDate">
+                                        <input type="text" class="form-control" placeholder="Выберите дату начала">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="endDate">Дата окончания</label>
+                                    <div class="input-group date" id="endDate">
+                                        <input type="text" class="form-control" placeholder="Выберите дату окончания">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label for="postCategoryID2" class="form-label">Категории поста</label>
+                                <select class="form-select" id="postCategoryID2" name="category_id" placeholder="Выберите категорию поста" multiple>
+                                    <option style="display: none;" value="" selected>Выберите категорию поста</option>
+                                    <!-- Опции будут добавлены с помощью JavaScript -->
+                                </select>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label for="sort_post" class="form-label">Показать сначала</label>
+                                <select class="form-select" id="sort_post" size="3" aria-label="Size 3 select example">
+                                    <option value="1" selected>Новые</option>
+                                    <option value="2">Самые популярные</option>
+                                    <option value="3">Самые обсуждаемые </option>
+                                  </select>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label for="floatingInput">Поиск по тексту новостей</label>
+                                <input type="text_dis" id="text_dis" class="form-control" placeholder="Введите текст">
+                              </div>
+                            <button type="submit" class="btn btn-primary">Фильтровать</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-8 col-md-8">
+            <h1 class="mt-5">Welcome to Forum</h1>
+            <div class="row row-cols-md-1">
+                {{ range .Posts }}
+                <div class="col-auto">
+                    <div class="card mb-5">
+                        <div class="col-md-12">
+                            <div class="card-header">
+                                <a href="/Id/{{ .ID }}" class="card-title fs-2 fw-bold link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{ .Title }}</a>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card-body">
+                                <img src="{{ .ImageURL }}" class="card-img-top img-fluid rounded" alt="Image">
+                                <p class="card-title formatted-text mt-3">{{ .Anons }}</p>
+                                <p class="card-text">Категория: 
+                                {{ $categories := .Categorys }}
+                                {{ $categoryIDs := .CategoryIDs }}
+                                {{ range $index, $catID := $categoryIDs }}
+                                    <a href="/Categorys/{{ $catID }}">
+                                        <span class="badge rounded-pill text-bg-primary">{{ index $categories $index }}</span>
+                                    </a>
+                                {{ end }}
+                                </p>
+                                <div class="card-text">
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNL_ZnOTpXSvhf1UaK7beHey2BX42U6solRA&usqp=CAU" alt="Автор" class="rounded-circle" style="width: 40px; height: 40px;">
+                                    <a href="/Author/{{ .AuthorID }}"><span class="ml-2">{{ .Author }}</span></a>
+                                    <span class="ml-2"> | </span>
+                                    <span class="ml-auto">{{ .Date }}</span>
+                                </div>
+                                <div class="card-text mt-3">
+                                    <button type="button" id="like-{{ .ID }}" class="btn LikePost btn-primary mr-2" onclick="handleLikeDislike('{{ .ID }}', 'like', '{{ $.Username1 }}')">👍 {{ .Like }}</button>
+                                    <button type="button" id="dislike-{{ .ID }}" class="btn DislikePost btn-danger mr-2" onclick="handleLikeDislike('{{ .ID }}', 'dislike', '{{ $.Username1 }}')">👎 {{ .DisLike }}</button>
+                                    <button type="button" onclick="window.location.href = '/Id/{{ .ID }}';" class="btn btn-outline-secondary">{{ .CommentLen }} Комментарии</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{ else }}
+                    <h3 class="mt-5">Нету новостей</h3>
+                {{ end }}
+            </div>
+        </div>
+        <div class="col-xl-1 col-md-0">
+        </div>
+    </div>
+</main>
+
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+<script src="/web/js/filtrPost.js"></script>
+<script src="/web/js/getCategorys.js"></script>
+<script src="/web/js/LikeDislike.js"></script>
+<script src="/web/js/navbar.js"></script>
+<script src="/web/js/modal.js"></script>
+<script src="/web/js/createCategoriAndPost.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>
+{{end}}

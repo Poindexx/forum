@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <title>{{ .Title }}</title>
+    <link rel="stylesheet" href="/web/css/styles.css">
+     <!-- Bootstrap CSS -->
+     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+     <!-- Bootstrap Datepicker CSS -->
+     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body>
+    <div class="sticky-top">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">FORUM</a> 
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="fa fa-navicon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link create-category disabled" href="#">Создать категорию</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link create-post disabled" href="#">Создать пост</a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    {{ if eq .Username1 ""}}
+                    <a href="/" class="navbar-user"></a>
+                    <a href="/login" class="btn btn-primary">Войти</a>
+                    {{ else }}
+                    <a href="/" class="navbar-user dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">{{ .Username1 }}</a>
+                    <a href="/login" class="btn btn-primary">Войти</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/My_likes">Мои лайки</a></li>
+                        <li><a class="dropdown-item" href="/My_posts">Мои посты</a></li>
+                    </ul>
+                    {{end}}
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Модальное окно для создания категории -->
+    <div class="modal fade" id="createCategoryModal" tabindex="-1" aria-labelledby="createCategoryModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createCategoryModalLabel">Создать новую категорию</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Форма для создания категории -->
+                    <form>
+                        <div class="mb-3">
+                            <label for="categoryName" class="form-label">Название категории</label>
+                            <input type="text" class="form-control" id="categoryName" aria-describedby="categoryNameHelp">
+                            <div id="categoryNameHelp" class="form-text">Введите название новой категории</div>
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="categriadd()">Создать</button>
+                    </form>
+                    <div id="categoryError" style="color: red;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для создания поста -->
+    <div class="modal fade" id="createPostModal" tabindex="-1" aria-labelledby="createPostModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createPostModalLabel">Создать новый пост</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="createPostForm" method="POST" action="/create-post">
+                        <div class="mb-3">
+                            <label for="postTitle" class="form-label">Заголовок поста</label>
+                            <input type="text" class="form-control" id="postTitle" name="title" aria-describedby="postTitleHelp">
+                            <div id="postTitleHelp" class="form-text">Введите заголовок нового поста</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="postAnons" class="form-label">Анонс поста</label>
+                            <input class="form-control" id="postAnons" name="anons">Введите анонс поста</input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="postDescription" class="form-label">Описание поста</label>
+                            <textarea class="form-control" id="postDescription" name="description" rows="3"></textarea>
+                        </div>
+                        <!-- <div class="mb-3">
+                            <label for="postImageURL" class="form-label">URL изображения</label>
+                            <input type="text" class="form-control" id="postImageURL" name="image_url">
+                        </div> -->
+                        <div class="input-group mb-3">
+                            <input type="file" class="form-control" id="inputGroupFile02">
+                        </div>
+                        <div class="mb-3">
+                            <label for="postCategoryID" class="form-label">Категории поста</label>
+                            <select class="form-select" id="postCategoryID" name="category_id" multiple>
+                                <!-- Опции будут добавлены с помощью JavaScript -->
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary" onclick="createPost()">Создать</button>
+                    </form>
+
+                    <div id="postError" style="color: red;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div id="copyToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Уведомление</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" id="toastErrText">
+            </div>
+        </div>
+    </div>
+
+    {{template "content" .}}
