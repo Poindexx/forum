@@ -46,4 +46,10 @@
 - Будьте осторожны с размером изображений.
 - Что бы запустить Докер используйте эти команды:
 docker image build -f Dockerfile -t forum .
-docker container run -p 8080:8080 --detach --name form forum  
+docker container run -p 8080:8080 --detach --name form forum
+
+## Скриншоты
+
+- Основной экран.
+[! [подпись] (ссылка_на_изображение)](https://github.com/Poindexx/forum/blob/main/photo/Image%2025.06.2024%20at%2020.10.jpeg)
+
