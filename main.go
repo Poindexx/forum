@@ -104,6 +104,10 @@ func main() {
 	router.AddRoute("/updateLikes", forum.UpdateLikesHandler, "POST")
 	router.AddRoute("/updateLikesCom", forum.UpdateLikesComHandler, "POST")
 	router.AddRoute("/updateComment", forum.UpdateCommentHandler, "POST")
+	router.AddRoute("/login/google", forum.GoogleLoginHandler, "POST")
+	router.AddRoute("/auth/google/callback", forum.GithubLoginHandler, "POST")
+	router.AddRoute("/login/github", forum.GithubLoginHandler, "POST")
+	router.AddRoute("/auth/github/callback", forum.GithubCallbackHandler, "POST")
 	router.AddRoute("/error", forum.Error404Handler, "GET")
 
 	// Используем кастомный маршрутизатор

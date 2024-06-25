@@ -65,7 +65,6 @@ func CreatePostHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("No categories selected")
 		return
 	}
-	fmt.Println(post)
 
 	// Декодирование Base64 изображения
 	imageData, err := base64.StdEncoding.DecodeString(post.ImageBase64)
