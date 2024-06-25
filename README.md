@@ -53,7 +53,7 @@ docker container run -p 8080:8080 --detach --name form forum
 - Основной экран.
 - ![Заменяющий текст](https://github.com/Poindexx/forum/blob/main/photo/Image%2025.06.2024%20at%2020.10.jpeg)
 - Фильтрация и сортировка.
-- ![Заменяющий текст](https://github.com/Poindexx/forum/blob/main/photo/Image%2025.06.2024%20at%2020.14.jpeg)
+- ![Заменяющий текст](https://github.com/Poindexx/forum/blob/main/photo/Image%2025.06.2024%20at%2020.13.jpeg)
 - Страница для каждого поста.
 - ![Заменяющий текст](https://github.com/Poindexx/forum/blob/main/photo/Image%2025.06.2024%20at%2020.13%20(1).jpeg)
 - Комментарии.
