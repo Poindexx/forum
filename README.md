@@ -51,5 +51,5 @@ docker container run -p 8080:8080 --detach --name form forum
 ## Скриншоты
 
 - Основной экран.
-! [подпись] (https://github.com/Poindexx/forum/blob/main/photo/Image%2025.06.2024%20at%2020.10.jpeg)
+- ![Заменяющий текст]([https://example.com/rainbow.png](https://github.com/Poindexx/forum/blob/main/photo/Image%2025.06.2024%20at%2020.10.jpeg))
 
